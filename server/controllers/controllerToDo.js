@@ -2,8 +2,10 @@ const { ToDo } = require('../models')
 
 class Controller {
     static addToDos(req, res) {
+        const UserId = req.loggedUser.id
         const { title, description, status, dueDate } = req.body
-        const obj = { title, description, status, dueDate }
+        const obj = { title, description, status, dueDate, UserId }
+        console.log(obj);
         ToDo.create(obj)
             .then(data => {
                 res.status(201).json({ msg: 'sukses nambah list', data })
@@ -39,10 +41,12 @@ class Controller {
     }
     static editAllToDos(req, res) {
         const id = +req.params.id
+        console.log(id, 'asup1');
         const { title, description, status, dueDate } = req.body
         const obj = { title, description, status, dueDate }
         ToDo.update(obj, { where: { id } })
             .then(_=> {
+                console.log(id);
                 return ToDo.findOne({where: {id}})
             })
             .then(data => {

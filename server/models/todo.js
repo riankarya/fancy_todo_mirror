@@ -55,7 +55,8 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ToDo',
