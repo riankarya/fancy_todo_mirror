@@ -1,70 +1,50 @@
 const { ToDo } = require('../models')
 
 class Controller {
-    static addToDos(req, res) {
+    static addToDos(req, res, next) {
         const UserId = req.loggedUser.id
         const { title, description, status, dueDate } = req.body
         const obj = { title, description, status, dueDate, UserId }
-        console.log(obj);
         ToDo.create(obj)
             .then(data => {
                 res.status(201).json({ msg: 'sukses nambah list', data })
             })
             .catch(err => {
-                if (err.name != "SequelizeValidationError") {
-                    res.status(500)
-                } else {
-                    res.status(400).json({ msg: 'gagal nambah list', err })
-                }
+                next(err)
             })
     }
-    static toDos(req, res) {
+    static toDos(req, res, next) {
         console.log(req.loggedUser);
         ToDo.findAll()
             .then(data => {
                 res.status(200).json({ data })
             })
-            .catch(err => {
-                res.status(500)
-            })
+            .catch(next)
     }
-    static toDosById(req, res) {
+    static toDosById(req, res, next) {
         const id = +req.params.id
         ToDo.findOne({ where: { id } })
             .then(data => {
-                if(!data) throw { error: "not found" }
+                if(!data) throw {name: 'ToDoNotFound', error: "not found" }
                 res.status(200).json({ data })
             })
-            .catch(err => {
-                res.status(404).json({err})
-            })
+            .catch(next)
     }
-    static editAllToDos(req, res) {
+    static editAllToDos(req, res, next) {
         const id = +req.params.id
-        console.log(id, 'asup1');
         const { title, description, status, dueDate } = req.body
         const obj = { title, description, status, dueDate }
         ToDo.update(obj, { where: { id } })
             .then(_=> {
-                console.log(id);
                 return ToDo.findOne({where: {id}})
             })
             .then(data => {
-                console.log(data);
-                if (!data) throw {error: "not found"}
+                if (!data) throw {name:'ToDoNotFound', error: "not found"}
                 res.status(200).json({ data })
             })
-            .catch(err => {
-                console.log(err);
-                if (err.name != "SequelizeValidationError") {
-                    res.status(500)
-                } else {
-                    res.status(400).json({ err })
-                }
-                res.status(404).json({err})
-            })
+            .catch(next)
     }
-    static editStatusToDos(req, res) {
+    static editStatusToDos(req, res, next) {
         const id = +req.params.id
         const { status } = req.body
         const obj = { status }
@@ -73,33 +53,20 @@ class Controller {
                 return ToDo.findOne({where: {id}})
             })
             .then(data => {
-                if (!data) throw {error: "not found"}
+                if (!data) throw {name: 'ToDoNotFound', error: "not found"}
                 res.status(200).json({ data })
             })
-            .catch(err => {
-                if (err.name != "SequelizeValidationError") {
-                    res.status(500)
-                } else {
-                    res.status(400).json({ err })
-                }
-                res.status(404).json({err})
-            })
+            .catch(next)
     }
-    static deleteToDos(req, res) {
+    static deleteToDos(req, res, next) {
         const id = +req.params.id
         ToDo.findOne({where: {id}})
         .then(data => {
-            if(!data) throw {error: "not found", status: 404}
+            if(!data) throw {name: 'ToDoNotFound', error: "not found"}
             ToDo.destroy({where: {id}})
             res.status(200).json({data})
         })
-        .catch(err => {
-            if(err.status == 404) {
-                res.status(404).json({err})
-            } else {
-                res.status(500)
-            }
-        })
+        .catch(next)
     }
 }
 
