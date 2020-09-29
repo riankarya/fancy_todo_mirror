@@ -3,7 +3,7 @@ const hashPassword = require('../helpers/hashPassword')
 const {generateToken} = require('../helpers/jwt')
 
 class Controller {
-    static registerUser(req, res) {
+    static registerUser(req, res, next) {
         const { email, password } = req.body
         const obj = { email, password }
         User.create(obj)
@@ -14,16 +14,14 @@ class Controller {
             }
             res.status(201).json({msg: 'berhasil register', data})
         })
-        .catch(err => {
-            res.status(500).json({error: 'internal server error'})
-        })
+        .catch(next)
     }
-    static loginUser(req, res) {
+    static loginUser(req, res, next) {
         const { email, password } = req.body
         const obj = { email, password }
         User.findOne({where: {email}})
         .then(data => {
-            if (!data || hashPassword(password) != data.password) throw {msg: 'invalid email or password'}
+            if (!data || hashPassword(password) != data.password) throw {name: 'UnAuthorized', msg: 'invalid email or password'}
             let payload = {
                 id: data.id,
                 email: data.email
@@ -31,9 +29,7 @@ class Controller {
             let token = generateToken(payload)
             res.status(200).json({msg: 'berhasil login', token})
         })
-        .catch(err => {
-            res.status(400).json({err})
-        })
+        .catch(next)
     }
 }
 

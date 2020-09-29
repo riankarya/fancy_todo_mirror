@@ -1,19 +1,14 @@
 const {User} = require('../models')
 const {verifyToken} = require('../helpers/jwt')
 
-function authentication(req, res, next) {
-    let {token} = req.headers
-    let decoded = verifyToken(token)
-    User.findOne({where: {email: decoded.email}})
-    .then(data => {
-        if(!data) throw {msg: 'Authentication Failed'}
-        req.loggedUser = decoded
+const authentication = (req, res, next) => {
+    try {
+        req.loggedUser = verifyToken(req.headers.token)
         next()
-    })
-    .catch(err => {
-        console.log(err, 'asup auth err')
-        res.status(500).json({error: err.msg || "Internal server error"})
-    })
+    }
+    catch {
+        next({ name: 'AuthenticationError', msg: 'Not Authenticated'})
+    }
 }
 
 module.exports = authentication
