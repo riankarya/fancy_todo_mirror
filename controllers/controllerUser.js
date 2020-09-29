@@ -8,6 +8,10 @@ class Controller {
         const obj = { email, password }
         User.create(obj)
         .then(data => {
+            data = {
+                id: data.id,
+                email: data.email
+            }
             res.status(201).json({msg: 'berhasil register', data})
         })
         .catch(err => {
@@ -25,7 +29,6 @@ class Controller {
                 email: data.email
             }
             let token = generateToken(payload)
-            console.log(token, 'asup33333333');
             res.status(200).json({msg: 'berhasil login', token})
         })
         .catch(err => {

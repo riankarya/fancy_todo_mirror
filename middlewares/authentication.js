@@ -7,7 +7,7 @@ function authentication(req, res, next) {
     User.findOne({where: {email: decoded.email}})
     .then(data => {
         if(!data) throw {msg: 'Authentication Failed'}
-        req.loggedUser = data.dataValues
+        req.loggedUser = decoded
         next()
     })
     .catch(err => {
