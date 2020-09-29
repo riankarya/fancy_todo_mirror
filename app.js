@@ -1,7 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const port = 3000
-const ToDo = require('./routes/routeToDo')
+const ToDo = require('./routes/route')
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())

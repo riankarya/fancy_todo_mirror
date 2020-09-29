@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         customValidator(value) {
           if (value === '') {
             throw new Error('dueDate harus diisi')
-          } else if (new Date(value) <= new Date()) {
+          } else if (new Date() > new Date(value)) {
             throw new Error('tanggal tidak boleh dari masa lalu')
           }
         }
@@ -42,6 +42,16 @@ module.exports = (sequelize, DataTypes) => {
         customValidator(value) {
           if (value === '') {
             throw new Error('description harus diisi')
+          }
+        }
+      }
+    },
+    status: {
+      type: DataTypes.STRING,
+      validate: {
+        customValidator(value) {
+          if (value === '') {
+            throw new Error('status harus diisi')
           }
         }
       }
