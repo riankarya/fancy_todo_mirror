@@ -14,8 +14,7 @@ class Controller {
             })
     }
     static toDos(req, res, next) {
-        console.log(req.loggedUser);
-        ToDo.findAll()
+        ToDo.findAll({where: {UserId: req.loggedUser.id}})
             .then(data => {
                 res.status(200).json({ data })
             })
