@@ -5,10 +5,10 @@ function errorHandler(err, req, res, next) {
             res.status(422).json({ errors })
             break
         case 'AuthenticationError':
-            res.status(403).json({ errors: [err.msg] })
+            res.status(401).json({ errors: [err.msg] })
             break
         case 'UnAuthorized':
-            res.status(401).json({ errors: [err.msg] })
+            res.status(403).json({ errors: [err.msg] })
             break
         case 'ToDoNotFound':
             res.status(404).json({ errors: [err.msg] })
