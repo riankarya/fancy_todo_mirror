@@ -1,4 +1,5 @@
 const { ToDo } = require('../models')
+const Helper = require('../helpers/tanggalBetul')
 
 class Controller {
     static addToDos(req, res, next) {
@@ -16,6 +17,9 @@ class Controller {
     static toDos(req, res, next) {
         ToDo.findAll({where: {UserId: req.loggedUser.id}})
             .then(data => {
+                data.forEach(element => {
+                    element.dataValues.dueDate = Helper.tanggalBetul(element.dataValues.dueDate)
+                });
                 res.status(200).json({ data })
             })
             .catch(next)
@@ -24,7 +28,9 @@ class Controller {
         const id = +req.params.id
         ToDo.findOne({ where: { id } })
             .then(data => {
+                console.log(data);
                 if(!data) throw {name: 'ToDoNotFound', error: "not found" }
+                data.dataValues.dueDate = Helper.tanggalBetul(data.dataValues.dueDate)
                 res.status(200).json({ data })
             })
             .catch(next)
@@ -44,6 +50,7 @@ class Controller {
             .catch(next)
     }
     static editStatusToDos(req, res, next) {
+        console.log('asup ti controller edit status todo');
         const id = +req.params.id
         const { status } = req.body
         const obj = { status }
@@ -53,6 +60,7 @@ class Controller {
             })
             .then(data => {
                 if (!data) throw {name: 'ToDoNotFound', error: "not found"}
+                console.log(data, 'DARI EDIT STATUS CONTROLLER');
                 res.status(200).json({ data })
             })
             .catch(next)
