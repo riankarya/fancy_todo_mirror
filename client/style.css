@@ -1,0 +1,79 @@
+body {
+    background-image: url("https://images.unsplash.com/photo-1493723843671-1d655e66ac1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-color: #cccccc;
+    height: 100vh;
+    padding: 20px !important;
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+   }
+
+.logreg-page {
+    width: 300px;
+}
+
+.fixed-content {
+    top: 150px;
+    bottom:0;
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.card-todo-list {
+    margin: 20px;
+    max-width: 100%;
+}
+
+.mar {
+    margin-top: 20px;
+  }
+    
+#navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.columns {
+    margin: 10px;
+    display: inline-flex;
+    max-width: 100%;
+    min-width: 100%;
+}
+.column {
+    margin: 20px;
+    text-align: center;
+    border: black;
+}
+
+.list-todo {
+    text-align: left;
+}
+
+.todo-container {
+    margin-left: 5%;
+    text-align: center;
+}
+
+#weather-content p{
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+}
+#weather-content h4{
+    margin: 0;
+    padding: 0;
+}
+#weather{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;    
+}
