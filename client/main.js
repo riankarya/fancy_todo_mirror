@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000"
+const baseUrl = "https://rianfancytodo.herokuapp.com/"
 
 $(document).ready(function () {
   checkLogin()
