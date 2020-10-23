@@ -24,15 +24,21 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    dueDate: {
+    dueDate: { 
+      allowNull: false,
       type: DataTypes.DATE,
       validate: {
-        customValidator(value) {
-          if (value === '') {
-            throw new Error('dueDate harus diisi')
-          } else if (new Date() > new Date(value)) {
-            throw new Error('tanggal tidak boleh dari masa lalu')
-          }
+        notNull: {
+          args: true,
+          msg: "due_date is required!"
+        },
+        notEmpty: {
+          arg: true,
+          msg: "due_date is required!"
+        },
+        isAfter: {
+          args: `${new Date(new Date().setDate(new Date().getDate()-1))}`,
+          msg: "due_date can't be a date that has passed!"
         }
       }
     },

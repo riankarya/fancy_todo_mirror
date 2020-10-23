@@ -119,9 +119,8 @@ function getToDos() {
         if (elem.status == "To Do") {
           $('.belum').append(`    
             <li class='list-todo'>
-              <details>
-                <summary>${elem.title}</summary>   
-                <div class="card card-todo-list">
+              <div class="card card-todo-list">
+                <div class="card-header">${elem.title}</div>
                   <div class="card-content">
                     <div class="content">
                       ${elem.description}
@@ -137,15 +136,13 @@ function getToDos() {
                   <button class="button is-danger is-outlined is-small" onclick='deleteToDo(${elem.id})'>Delete</button>
                   </footer>
                 </div>
-              </details>  
             </li>  
           `)
         } else if (elem.status == "On Progress") {
           $('.lagi').append(`    
             <li class='list-todo'>
-              <details>
-                <summary>${elem.title}</summary>   
-                <div class="card card-todo-list">
+              <div class="card card-todo-list">
+                <div class="card-header">${elem.title}</div>
                   <div class="card-content">
                     <div class="content">
                       ${elem.description}
@@ -162,15 +159,13 @@ function getToDos() {
                     <button class="button is-danger is-outlined is-small" onclick='deleteToDo(${elem.id})'>Delete</button>
                   </footer>
                 </div>
-              </details>  
             </li>  
           `)
         } else {
           $('.udah').append(`    
             <li class='list-todo'>
-              <details>
-                <summary>${elem.title}</summary>   
-                <div class="card card-todo-list">
+              <div class="card card-todo-list">
+                <div class="card-header">${elem.title}</div>
                   <div class="card-content">
                     <div class="content">
                       ${elem.description}
@@ -186,7 +181,6 @@ function getToDos() {
                     <button class="button is-danger is-outlined is-small" onclick='deleteToDo(${elem.id})'>Delete</button>
                   </footer>
                 </div>
-              </details>  
             </li>  
           `)
         }
@@ -243,6 +237,7 @@ function showEditAllToDoForm(data) {
       $('#edit-title').val(data.title)
       $('#edit-dueDate').val(data.dueDate)
       $('#edit-description').val(data.description)
+      $('#edit-status').val(data.status)
       $('#id-editalltodo-page').val(data.id)
     })
     .fail(err => {
@@ -256,6 +251,7 @@ function editAllToDo(event) {
   let title = $('#edit-title').val()
   let dueDate = $('#edit-dueDate').val()
   let description = $('#edit-description').val()
+  let status = $('#add-status').val()
   let id = $('#id-editalltodo-page').val()
   console.log(id);
   $.ajax({
@@ -265,7 +261,8 @@ function editAllToDo(event) {
     data: {
       title,
       dueDate,
-      description
+      description,
+      status
     }
   })
     .done(data => {
