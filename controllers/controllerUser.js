@@ -33,18 +33,6 @@ class Controller {
             })
             .catch(next)
     }
-    // static async googleLoginUser(req, res, next) {
-    //     console.log('asup');
-    //     console.log(req.body.tokenGoogle);
-    //     let tokenGoogle = req.body.tokenGoogle
-    //     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
-    //     const ticket = await client.verifyIdToken({
-    //         idToken: tokenGoogle,
-    //         audience: process.env.GOOGLE_CLIENT_ID
-    //     })
-    //     const payload = ticket.getPayload()
-    //     const userid = payload['sub']
-    // }
 
     static googleLoginUser(req, res, next) {
         console.log('google login')

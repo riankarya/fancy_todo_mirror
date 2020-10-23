@@ -39,6 +39,7 @@ class Controller {
         const id = +req.params.id
         const { title, description, status, dueDate } = req.body
         const obj = { title, description, status, dueDate }
+        console.log(obj, id, 'ASUP TI EDITALLTODOS')
         ToDo.update(obj, { where: { id } })
             .then(_=> {
                 return ToDo.findOne({where: {id}})
