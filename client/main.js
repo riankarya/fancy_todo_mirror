@@ -1,4 +1,9 @@
-const baseUrl = "https://rianfancytodo.herokuapp.com/"
+const baseUrl = "http://localhost:3000"
+// import swal from 'sweetalert2'
+// window.Swal = swal
+// const Swal = require('sweetalert2')
+// import Swal from 'sweetalert2/dist/sweetalert2.js'
+// import 'sweetalert2/src/sweetalert2.scss'
 
 $(document).ready(function () {
   checkLogin()
@@ -118,9 +123,17 @@ function getToDos() {
       data.data.forEach(elem => {
         if (elem.status == "To Do") {
           $('.belum').append(`    
-            <li class='list-todo'>
+            <li class='list-todo' style="margin: 0 auto;">
               <div class="card card-todo-list">
-                <div class="card-header">${elem.title}</div>
+                <div class="card-header">
+                <p class="card-header-title"
+                >${elem.title}</p>
+                <a onclick='deleteToDo(${elem.id})' class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
+                  </span>
+                </a>
+                </div>
                   <div class="card-content">
                     <div class="content">
                       ${elem.description}
@@ -131,9 +144,9 @@ function getToDos() {
                     </div>
                   </div>
                   <footer class="card-footer">
+                  <button class="button is-info is-outlined is-small fas fa-angle-left" disabled onclick='statusToOnProgress(${elem.id})'></button>
                   <button class="button is-success is-outlined is-small" onclick='showEditAllToDoForm(${elem.id})'>Edit</button>
-                  <button class="button is-primary is-outlined is-small" onclick='statusToOnProgress(${elem.id})'>On Progress</button>
-                  <button class="button is-danger is-outlined is-small" onclick='deleteToDo(${elem.id})'>Delete</button>
+                  <button class="button is-info is-outlined is-small fas fa-angle-right" onclick='statusToOnProgress(${elem.id})'></button>
                   </footer>
                 </div>
             </li>  
@@ -142,7 +155,15 @@ function getToDos() {
           $('.lagi').append(`    
             <li class='list-todo'>
               <div class="card card-todo-list">
-                <div class="card-header">${elem.title}</div>
+                <div class="card-header">
+                <p class="card-header-title"
+                >${elem.title}</p>
+                <a onclick='deleteToDo(${elem.id})' class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
+                  </span>
+                </a>
+                </div>
                   <div class="card-content">
                     <div class="content">
                       ${elem.description}
@@ -153,10 +174,9 @@ function getToDos() {
                     </div>
                   </div>
                   <footer class="card-footer">
+                  <button class="button is-info is-outlined is-small fas fa-angle-left" onclick='statusToToDo(${elem.id})'></button>
                     <button class="button is-success is-outlined is-small" onclick='showEditAllToDoForm(${elem.id})'>Edit</button>
-                    <button class="button is-info is-outlined is-small" onclick='statusToToDo(${elem.id})'>Undone</button>
-                    <button class="button is-primary is-outlined is-small" onclick='statusToDone(${elem.id})'>Done</button>
-                    <button class="button is-danger is-outlined is-small" onclick='deleteToDo(${elem.id})'>Delete</button>
+                    <button class="button is-info is-outlined is-small fas fa-angle-right" onclick='statusToDone(${elem.id})'></button>
                   </footer>
                 </div>
             </li>  
@@ -165,7 +185,15 @@ function getToDos() {
           $('.udah').append(`    
             <li class='list-todo'>
               <div class="card card-todo-list">
-                <div class="card-header">${elem.title}</div>
+                <div class="card-header">
+                <p class="card-header-title"
+                >${elem.title}</p>
+                <a onclick='deleteToDo(${elem.id})' class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
+                  </span>
+                </a>
+                </div>
                   <div class="card-content">
                     <div class="content">
                       ${elem.description}
@@ -176,9 +204,9 @@ function getToDos() {
                     </div>
                   </div>
                   <footer class="card-footer">
-                    <button class="button is-success is-outlined is-small" onclick='showEditAllToDoForm(${elem.id})'>Edit</button>
-                    <button class="button is-primary is-outlined is-small" onclick='statusToOnProgress(${elem.id})'>On Progress</button>
-                    <button class="button is-danger is-outlined is-small" onclick='deleteToDo(${elem.id})'>Delete</button>
+                  <button class="button is-info is-outlined is-small fas fa-angle-left" onclick='statusToOnProgress(${elem.id})'></button>
+                  <button class="button is-success is-outlined is-small" onclick='showEditAllToDoForm(${elem.id})'>Edit</button>
+                  <button class="button is-info is-outlined is-small fas fa-angle-right" disabled onclick='statusToOnProgress(${elem.id})'></button>
                   </footer>
                 </div>
             </li>  
@@ -210,6 +238,13 @@ function addToDo(event) {
     }
   })
     .done(data => {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
       checkLogin()
       console.log(data, 'data dari addtodo');
     })

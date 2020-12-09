@@ -6,6 +6,8 @@
     content="64684442308-kqngr6jc3ffkuvavubtq0rt5rb3bb6m5.apps.googleusercontent.com">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="bulma-rtl.min.css">
+  <link rel="stylesheet" href="sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -15,43 +17,47 @@
 <body>
 
   <!-- LOGIN PAGE -->
-  <section id='login-page' class='card logreg-page'>
-    <div class='card-content'>
-      <h1 class='is-size-3 has-text-weight-semibold'>Log In</h1>
-      <form onsubmit="login(event)">
-        <label for="email">Email</label>
-        <input class="input is-primary" id="login-email" type="text" name="email">
+  <section id='login-page' class='logreg-page'>
+    <div class='card card-bg'>
+      <div class='card-content'>
+        <h1 class='is-size-3 has-text-weight-semibold'>Log In</h1>
+        <form onsubmit="login(event)">
+          <label for="email">Email</label>
+          <input class="input is-primary" id="login-email" type="text" name="email">
+          <br>
+          <br>
+          <label for="password">Password</label>
+          <input class="input is-primary" id="login-password" type="password" name="password">
+          <br>
+          <br>
+          <button class="button is-info" id="submit-login" type="submit">Log In</button>
+          <button class="button is-success" onclick="goToRegister()" id="go-to-register" type="button">Register</button>
+        </form>
+        <b>Or, use another account!</b>
         <br>
-        <br>
-        <label for="password">Password</label>
-        <input class="input is-primary" id="login-password" type="password" name="password">
-        <br>
-        <br>
-        <button class="button is-info" id="submit-login" type="submit">Log In</button>
-        <button class="button is-success" onclick="goToRegister()" id="go-to-register" type="button">Register</button>
-      </form>
-      <b>Or, use another account!</b>
-      <br>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </div>
     </div>
   </section>
 
   <!-- REGISTER PAGE -->
-  <section id='register-page' class='card logreg-page'>
-    <div class='card-content'>
-      <h1 class='is-size-3 has-text-weight-semibold'>Register</h1>
-      <form onsubmit='register(event)' id="register">
-        <label for="email">Email</label>
-        <input class="input is-primary" id="register-email" type="text" name="email">
-        <br>
-        <br>
-        <label for="password">Password</label>
-        <input class="input is-primary" id="register-password" type="password" name="password">
-        <br>
-        <br>
-        <button class="button is-info" id="submit-register" type="submit">Register</button>
-        <button class="button is-success" onclick="checkLogin()" id="go-to-login" type="button">Log In</button>
-      </form>
+  <section id='register-page' class='logreg-page'>
+    <div class='card card-bg'>
+      <div class='card-content'>
+        <h1 class='is-size-3 has-text-weight-semibold'>Register</h1>
+        <form onsubmit='register(event)' id="register">
+          <label for="email">Email</label>
+          <input class="input is-primary" id="register-email" type="text" name="email">
+          <br>
+          <br>
+          <label for="password">Password</label>
+          <input class="input is-primary" id="register-password" type="password" name="password">
+          <br>
+          <br>
+          <button class="button is-info" id="submit-register" type="submit">Register</button>
+          <button class="button is-success" onclick="checkLogin()" id="go-to-login" type="button">Log In</button>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -66,21 +72,20 @@
     <div>
       <div class="columns">
         <div class="column">
+          <div>
           <h1 class='is-size-3 has-text-weight-semibold'>Undone</h1>
-          <ul class="fixed-content hidden-scrollbar todo-container belum">
-
-          </ul>
+            <ul class="fixed-content hidden-scrollbar todo-container belum" style="width: 100%; height: 800px;">
+            </ul>
+          </div>
         </div>
         <div class="column">
           <h1 class='is-size-3 has-text-weight-semibold'>On Progress</h1>
           <ul class="fixed-content hidden-scrollbar todo-container lagi">
-
           </ul>
         </div>
         <div class="column">
           <h1 class='is-size-3 has-text-weight-semibold'>Done</h1>
           <ul class="fixed-content hidden-scrollbar todo-container udah">
-
           </ul>
         </div>
         <div id='weather'></div>
@@ -90,7 +95,7 @@
   </section>
 
   <!-- ADD TO DO PAGE-->
-  <section id='addtodo-page' class='control card'>
+  <section id='addtodo-page' class='control card card-bg'>
     <div class='card-content'>
       <h1 class='is-size-3 has-text-weight-semibold'>Add To Do</h1>
       <form onsubmit="addToDo(event)">
@@ -123,7 +128,7 @@
   </section>
 
   <!-- EDIT ALL TO DO PAGE-->
-  <section id='editalltodo-page'>
+  <section id='editalltodo-page' class="control card card-bg">
     <div class='card-content'>
       <h1 class='is-size-3 has-text-weight-semibold'>Edit To Do</h1>
       <form onsubmit="editAllToDo(event)">
